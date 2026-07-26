@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Credora - Kredi & Risk Modeli</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" type="image/png" href="logo/koyu-tema-yazisiz.png">
+</head>
+<body class="min-h-screen relative overflow-x-hidden">
+
+<!-- Dark mode zemin (Grid efekti) -->
+<div class="bg-grid"></div>
+
+<!-- Sağ/Sol renkli parlamalar (Aurora) -->
+<div class="aurora aurora-1"></div>
+<div class="aurora aurora-2"></div>
+
+<!-- Üst bar & Kontroller -->
+<header class="relative max-w-5xl mx-auto px-5 sm:px-6 pt-8 pb-4 flex justify-center items-center" style="z-index: 99999;">
+    
+    <!-- Temaya göre değişen logolar -->
+    <img src="logo/koyu-tema-yazili.png" alt="Credora Logo" class="dark-logo h-24 sm:h-24 object-contain w-auto">
+    <img src="logo/normal-yazili.png" alt="Credora Logo" class="light-logo h-24 sm:h-24 object-contain w-auto hidden">
+    
+    <!-- Sağ üst menü (Tema + MLOps) -->
+    <div class="absolute right-5 sm:right-6 top-10 flex flex-col sm:flex-row items-end sm:items-center gap-4 sm:gap-6">
+        
+        <!-- MLOps onay butonu/rozeti -->
+        <div class="relative">
+            <button type="button" id="xgboostBadgeBtn" class="flex items-center gap-2 text-xs font-mono font-medium text-emerald-400 hover:text-emerald-300 transition-colors duration-300 cursor-pointer">
+                <span id="xgboostDot" class="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)] transition-all duration-300"></span> 
+                <span id="xgboostText">MLOps Aktif</span>
+            </button>
+            
+            <!-- Tıklayınca açılan bilgi kutucuğu -->
+            <div id="mlopsPopover" class="absolute right-0 top-full mt-3 w-72 p-5 rounded-2xl glass border border-white/10 shadow-2xl opacity-0 pointer-events-none transition-all duration-300 transform translate-y-[10px] z-50 text-left">
+                <h4 class="text-sm font-semibold text-white mb-2">Sürekli Öğrenme (MLOps)</h4>
+                <p class="text-xs text-neutral-400 mb-4 leading-relaxed">
+                    Kredi karar motorumuzun daha isabetli sonuçlar verebilmesi için, girilen başvuru verilerinin <span class="text-emerald-400">tamamen anonimleştirilerek</span> model eğitiminde kullanılmasına izin verin.
+                </p>
+                <label class="flex items-start gap-3 cursor-pointer group">
+                    <div class="relative flex items-center justify-center mt-0.5 shrink-0">
+                        <input type="checkbox" id="mlopsToggle" class="peer sr-only" checked>
+                        <div class="w-5 h-5 rounded-[4px] border border-neutral-500 bg-neutral-800 peer-checked:bg-emerald-500 peer-checked:border-emerald-500 transition-colors duration-200"></div>
+                        <svg class="absolute w-3.5 h-3.5 text-white opacity-0 peer-checked:opacity-100 transition-opacity duration-200 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                        </svg>
+                    </div>
+                    <span class="text-xs text-neutral-300 font-medium group-hover:text-white transition-colors">
+                        Müşteri verilerinin anonim olarak model eğitiminde kullanılmasına onay veriyorum.
+                    </span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Dark/Light mode switch -->
+        <label class="flex items-center cursor-pointer gap-2">
+            <svg class="w-4 h-4 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+            <div class="relative">
+                <input type="checkbox" id="themeSlider" class="sr-only" checked>
+                <div class="block w-11 h-6 bg-white/10 border border-white/20 rounded-full transition-colors duration-300"></div>
+                <div class="dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform duration-300 ease-in-out flex items-center justify-center translate-x-[20px]">
+                    <div class="w-2 h-2 rounded-full bg-purple-500"></div>
+                </div>
+            </div>
+            <svg class="w-4 h-4 text-purple-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+        </label>
+    </div>
+</header>
+
+<div class="relative z-10 max-w-5xl mx-auto px-5 sm:px-6 pt-10 pb-24">
+    <!-- Hero / Ana Başlık -->
+    <div class="text-center mb-14">
+        <h1 class="display text-4xl sm:text-5xl font-semibold leading-[1.1] mb-5 bg-clip-text text-transparent" style="background-image:linear-gradient(180deg,#ffffff,#ffffff 40%,#a3a8c2);-webkit-background-clip:text;">
+            Credora<br class="hidden sm:block"> Kredi & Risk Karar Motoru
+        </h1>
+        <p class="text-neutral-400 text-base sm:text-lg max-w-6xl mx-auto leading-relaxed">
+            Karar motorumuz, müşterilerinizin finansal profilini saniyeler içerisinde değerlendirerek müşteri analizini oluşturur. Şeffaflık ilkemiz doğrultusunda, olumsuz sonuçlanan başvurularda kararı etkileyen temel faktörleri anlaşılır, açıklanabilir şekilde tarafınıza aktarır.
+        </p>
+    </div>
+
+    <!-- Para birimi toggle -->
+    <div id="currencyToggle" class="relative flex items-center mx-auto mb-10 p-1 rounded-full bg-black/40 backdrop-blur-md border border-purple-500/30 cursor-pointer w-48 h-12 transition-colors duration-300 shadow-[0_0_15px_rgba(0,0,0,0.2)]">
+        <!-- Sağa sola kayan renkli bg -->
+        <div id="toggleThumb" class="absolute left-1 top-1 bottom-1 w-[calc(50%-4px)] rounded-full bg-gradient-to-r from-purple-500 to-blue-500 transition-all duration-500 ease-[cubic-bezier(0.4,0.0,0.2,1)] shadow-md"></div>
+        <!-- Toggle yazıları -->
+        <div class="relative z-10 flex-1 flex justify-center items-center font-semibold text-white transition-colors duration-300 select-none" id="labelTRY">₺ TL</div>
+        <div class="relative z-10 flex-1 flex justify-center items-center font-semibold text-neutral-500 transition-colors duration-300 select-none" id="labelUSD">$ USD</div>
+    </div>
+
+    <!-- Kredi Hesaplama Formu -->
+    <form id="creditForm" class="glass glow-ring rounded-3xl p-6 sm:p-10 relative">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+            
+            <!-- 1. Satır: Eğitim & Çalışma -->
+            <div>
+                <label class="text-sm text-neutral-300 font-medium mb-2.5 block">Eğitim Seviyesi</label>
+                <div class="relative flex items-center w-full">
+                    <select id="educationSelect" required class="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-purple-500 focus:bg-white/10 transition-all text-sm appearance-none">
+                        <option value="" disabled selected class="bg-[#12141c]">Seçiniz</option>
+                        <option value="High School" class="bg-[#12141c]">Lise</option>
+                        <option value="Associate" class="bg-[#12141c]">Önlisans</option>                        
+                        <option value="Bachelor" class="bg-[#12141c]">Lisans</option>
+                        <option value="Master" class="bg-[#12141c]">Yüksek Lisans</option>
+                        <option value="Doctorate" class="bg-[#12141c]">Doktora</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <label class="text-sm text-neutral-300 font-medium mb-2.5 block">Müşteri Çalışma Durumu</label>
+                <div class="relative flex items-center w-full">
+                    <select id="workStatusSelect" required class="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-purple-500 focus:bg-white/10 transition-all text-sm appearance-none">
+                        <option value="" disabled selected class="bg-[#12141c]">Seçiniz</option>
+                        <option value="Employed" class="bg-[#12141c]">Özel Sektör / Maaşlı</option>
+                        <option value="Self-Employed" class="bg-[#12141c]">Kendi İşinin Sahibi</option>
+                        <option value="Unemployed" class="bg-[#12141c]">Çalışmıyor</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- 2. Satır: Deneyim & Sicil -->
+            <div>
+                <label class="text-sm text-neutral-300 font-medium mb-2.5 block">Müşteri Deneyim Yılı</label>
+                <div class="relative flex items-center w-full">
+                    <input id="experienceInput" type="number" min="0" max="60" placeholder="5" required class="live-trigger w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 text-white placeholder-neutral-500 focus:outline-none focus:border-purple-500 focus:bg-white/10 transition-all mono">
+                </div>
+            </div>
+            <div>
+                <label class="text-sm text-neutral-300 font-medium mb-2.5 block">Kredi Geçmişi (Yıl)</label>
+                <div class="relative flex items-center w-full">
+                    <input id="creditHistoryInput" type="number" min="0" max="60" placeholder="5" required class="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 text-white placeholder-neutral-500 focus:outline-none focus:border-purple-500 focus:bg-white/10 transition-all mono">
+                </div>
+            </div>
+
+            <!-- 3. Satır: Gelir & Gider -->
+            <div>
+                <label class="text-sm text-neutral-300 font-medium mb-2.5 block">Müşteri Aylık Net Geliri</label>
+                <div class="relative flex items-center w-full">
+                    <span class="absolute left-4 font-bold text-neutral-400 z-10 currSym">₺</span>
+                    <input id="incomeInput" type="text" inputmode="numeric" placeholder="20.000" required class="live-trigger format-number w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white placeholder-neutral-500 focus:outline-none focus:border-purple-500 focus:bg-white/10 transition-all mono">
+                </div>
+            </div>
+            <div>
+                <label class="text-sm text-neutral-300 font-medium mb-2.5 block">Mevcut Aylık Borç Ödemeleri</label>
+                <div class="relative flex items-center w-full">
+                    <span class="absolute left-4 font-bold text-neutral-400 z-10 currSym">₺</span>
+                    <input type="text" inputmode="numeric" id="debtInput" placeholder="0" required class="format-number w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white placeholder-neutral-500 focus:outline-none focus:border-purple-500 focus:bg-white/10 transition-all mono">
+                </div>
+            </div>
+
+            <!-- 4. Satır: Varlık & Skor -->
+            <div>
+                <label class="text-sm text-neutral-300 font-medium mb-2.5 block">Müşteri Toplam Varlığı</label>
+                <div class="relative flex items-center w-full">
+                    <span class="absolute left-4 font-bold text-neutral-400 z-10 currSym">₺</span>
+                    <input type="text" inputmode="numeric" id="assetsInput" placeholder="500.000" required class="format-number w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white placeholder-neutral-500 focus:outline-none focus:border-purple-500 focus:bg-white/10 transition-all mono">
+                </div>
+            </div>
+            <div>
+                <label id="scoreLabel" class="text-sm text-neutral-300 font-medium mb-2.5 block">Müşteri Findeks Notu (1–1900)</label>
+                <div class="relative flex items-center w-full">
+                    <svg class="absolute left-4 w-4 h-4 text-neutral-400 z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>
+                    <input id="scoreInput" type="text" inputmode="numeric" placeholder="1.550" required class="live-trigger format-number w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white placeholder-neutral-500 focus:outline-none focus:border-purple-500 focus:bg-white/10 transition-all mono">
+                </div>
+            </div>
+
+            <!-- 5. Satır: Kredi Talebi -->
+            <div>
+                <label class="text-sm text-neutral-300 font-medium mb-2.5 block">İstenen Kredi Tutarı</label>
+                <div class="relative flex items-center w-full">
+                    <span class="absolute left-4 font-bold text-neutral-400 z-10 currSym">₺</span>
+                    <input id="amountInput" type="text" inputmode="numeric" placeholder="50.000" required class="live-trigger format-number w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white placeholder-neutral-500 focus:outline-none focus:border-purple-500 focus:bg-white/10 transition-all mono">
+                </div>
+            </div>
+            <div>
+                <label class="text-sm text-neutral-300 font-medium mb-2.5 block">İstenen Vade (Ay)</label>
+                <div class="relative flex items-center w-full">
+                    <select id="termSelect" required class="live-trigger w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-purple-500 focus:bg-white/10 transition-all text-sm appearance-none">
+                        <option value="" disabled selected class="bg-[#12141c]">Seçiniz</option>
+                        <option value="12" class="bg-[#12141c]">12 Ay</option>
+                        <option value="24" class="bg-[#12141c]">24 Ay</option>
+                        <option value="36" class="bg-[#12141c]">36 Ay</option>
+                        <option value="48" class="bg-[#12141c]">48 Ay</option>
+                        <option value="60" class="bg-[#12141c]">60 Ay</option>
+                        <option value="72" class="bg-[#12141c]">72 Ay</option>
+                        <option value="84" class="bg-[#12141c]">84 Ay</option>
+                        <option value="96" class="bg-[#12141c]">96 Ay</option>
+                        <option value="108" class="bg-[#12141c]">108 Ay</option>
+                        <option value="120" class="bg-[#12141c]">120 Ay</option>
+
+                        
+                    </select>
+                </div>
+            </div>
+
+        </div>
+        <!-- Anlık Faiz/Taksit gösterimi (Live Preview) -->
+        <div id="livePreview" class="hidden rounded-xl border border-blue-500/30 bg-blue-500/5 p-5 mt-6 fade-in">
+            <div class="flex justify-between items-center mb-3">
+                <span class="text-sm text-neutral-300 flex items-center gap-2">
+                    <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                    Canlı Model Tahmini
+                </span>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <div class="text-xs text-neutral-500 mb-1">Tahmini Yıllık Faiz Oranı</div>
+                    <div class="text-xl font-semibold mono text-blue-400" id="liveRate">%0.00</div>
+                </div>
+                <div>
+                    <div class="text-xs text-neutral-500 mb-1">Tahmini Aylık Taksit</div>
+                    <div class="text-xl font-semibold mono text-white" id="liveInstallment">0 ₺</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form submit butonu -->
+        <button type="submit" id="analyzeBtn" class="mt-8 w-full relative group overflow-hidden rounded-xl p-px font-semibold text-white transition-all duration-300 shadow-[0_0_40px_-10px_rgba(124,58,237,0.5)] hover:shadow-[0_0_60px_-15px_rgba(124,58,237,0.7)] bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500">
+            <div class="relative px-8 py-4 bg-black/20 backdrop-blur-sm rounded-xl transition-all duration-300 group-hover:bg-transparent text-lg">
+                Yapay Zeka ile Analiz Et
+            </div>
+        </button>
+    </form>
+
+    <div id="resultContainer" class="mt-6"></div>
+
+    <!-- Ekip Kartları -->
+    <section class="mt-28 text-center">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full glass text-xs text-neutral-400 mb-5 mono">
+            <span class="badge-dot"></span> Ekip
+        </div>
+        <h2 class="display text-3xl font-semibold mb-3">QUANTA Ekibi</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 mt-12">
+            <div class="glass rounded-2xl p-7">
+                <a href="https://www.linkedin.com/in/ali-m%C3%BCfit-dede-516a94254/" target="_blank" rel="noopener noreferrer" class="block w-20 h-20 rounded-full mx-auto mb-5 overflow-hidden avatar-placeholder hover:opacity-85 transition-opacity duration-300" aria-label="Ali Müfit DEDE LinkedIn profili">
+                    <img src="ekip/ali-mufit-dede.jpg" alt="Ali Müfit DEDE" class="w-full h-full object-cover">
+                </a>
+                <div class="text-sm font-semibold text-neutral-100">Ali Müfit DEDE</div>
+            </div>
+            <div class="glass rounded-2xl p-7">
+                <a href="https://www.linkedin.com/in/erencanturkoglu/" target="_blank" rel="noopener noreferrer" class="block w-20 h-20 rounded-full mx-auto mb-5 overflow-hidden avatar-placeholder hover:opacity-85 transition-opacity duration-300" aria-label="Eren Can TÜRKOĞLU LinkedIn profili">
+                    <img src="ekip/eren-can-turkoglu.jpg" alt="Eren Can TÜRKOĞLU" class="w-full h-full object-cover">
+                </a>
+                <div class="text-sm font-semibold text-neutral-100">Eren Can TÜRKOĞLU</div>
+            </div>
+            <div class="glass rounded-2xl p-7">
+                <a href="https://www.linkedin.com/in/%C3%B6m%C3%BCr-t-172b74b9/" target="_blank" rel="noopener noreferrer" class="block w-20 h-20 rounded-full mx-auto mb-5 overflow-hidden avatar-placeholder hover:opacity-85 transition-opacity duration-300" aria-label="Ömür Tutal PEKYİĞİT LinkedIn profili">
+                    <img src="ekip/omur-tutal.jpg" alt="Ömür Tutal PEKYİĞİT" class="w-full h-full object-cover">
+                </a>
+                <div class="text-sm font-semibold text-neutral-100">Ömür Tutal PEKYİĞİT</div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- Footer alanı -->
+<footer class="relative z-10 border-t border-white/5 py-8">
+    <div class="max-w-5xl mx-auto flex flex-col items-center gap-3">
+        <img src="logo/koyu-tema-yazisiz.png" alt="Quanta Logo" class="dark-logo h-20 opacity-50 object-contain w-auto">
+        <img src="logo/normal-yazisiz.png" alt="Quanta Logo" class="light-logo h-20 opacity-50 object-contain w-auto hidden">
+        <p class="text-neutral-500 text-xs">Credora, QUANTA ekibinin bir ürünüdür.</p>
+    </div>
+</footer>
+
+<!-- Scriptler -->
+<script src="script.js"></script>
+</body>
+</html>

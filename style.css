@@ -1,0 +1,229 @@
+/* Root değişkenler & Typo */
+:root {
+  --bg-0: #08090d;
+  --violet: #8b5cf6;
+  --blue: #3b82f6;
+  --ok: #34d399;
+  --bad: #f87171;
+  --line: rgba(255, 255, 255, 0.08);
+}
+
+html, body { 
+    background: var(--bg-0); 
+    font-family: 'Inter', sans-serif; 
+    color: #e7e8ee; 
+}
+
+h1, h2, h3, .display { 
+    font-family: 'Space Grotesk', sans-serif; 
+}
+
+.mono { 
+    font-family: 'JetBrains Mono', monospace; 
+}
+
+/* Arka plan & Efektler (Dark mode base) */
+.bg-grid {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image: linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 80% 55% at 50% 0%, black 40%, transparent 90%);
+}
+
+#credora-particles {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none; 
+}
+
+.aurora { position: fixed; z-index: 0; pointer-events: none; filter: blur(110px); opacity: 0.5; }
+.aurora-1 { top: -220px; left: -160px; width: 560px; height: 560px; background: radial-gradient(circle, var(--violet), transparent 70%); }
+.aurora-2 { top: -160px; right: -220px; width: 600px; height: 600px; background: radial-gradient(circle, var(--blue), transparent 70%); }
+
+/* Tema bazlı logo geçişleri */
+.dark-logo { display: block !important; }
+.light-logo { display: none !important; }
+
+body.theme-light .dark-logo { display: none !important; }
+body.theme-light .light-logo { display: block !important; }
+
+.dark-logo, .light-logo {
+    filter: contrast(1.25) brightness(1.08);
+}
+
+/* UI elemanları (Card, Button, Input) */
+.glass {
+  background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.015));
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--line);
+}
+.glow-ring { box-shadow: 0 0 0 1px rgba(139,92,246,0.15), 0 0 60px -12px rgba(139,92,246,0.35); }
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--violet), var(--blue));
+  transition: box-shadow .35s ease, transform .2s ease, filter .35s ease;
+}
+.btn-primary:hover {
+  box-shadow: 0 0 45px -6px rgba(139,92,246,0.75), 0 0 20px -4px rgba(59,130,246,0.6);
+  transform: translateY(-1px); filter: brightness(1.07);
+}
+.btn-primary:active { transform: translateY(0px) scale(0.99); }
+
+.field {
+  background: rgba(255,255,255,0.03); border: 1px solid var(--line);
+  transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+}
+.field:focus-within {
+  border-color: rgba(139,92,246,0.55); box-shadow: 0 0 0 3px rgba(139,92,246,0.12);
+  background: rgba(255,255,255,0.045);
+}
+select.field-select { background: transparent; }
+select.field-select option { background: #12141c; color: #e7e8ee; }
+
+/* USD modu özel stiller */
+body.theme-usd .aurora-1 { background: radial-gradient(circle, rgba(16, 185, 129, 0.8) 0%, rgba(16, 185, 129, 0) 70%); }
+body.theme-usd .aurora-2 { background: radial-gradient(circle, rgba(52, 211, 153, 0.6) 0%, rgba(45, 212, 191, 0) 70%); }
+body.theme-usd #mainFormBox,
+body.theme-usd #creditForm {
+    border-color: rgba(16, 185, 129, 0.3) !important;
+    box-shadow: 0 0 60px -15px rgba(16, 185, 129, 0.25) !important;
+    background-color: rgba(6, 78, 59, 0.05) !important; 
+}
+
+/* Light Mode overrides */
+body.theme-light { background-color: #e7e5e5 !important; }
+
+body.theme-light .bg-grid {
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.06) 1px, transparent 1px),
+                      linear-gradient(to bottom, rgba(0, 0, 0, 0.06) 1px, transparent 1px) !important;
+    mask-image: radial-gradient(ellipse 100% 80% at 50% 0%, black 50%, transparent 100%) !important;
+}
+
+body.theme-light .aurora { display: none !important; }
+
+/* Sadece TL aktifken */
+body.theme-light:not(.theme-usd) #creditForm {
+    background: #d9d9d9 !important; 
+    border: 1px solid #9c5ec079 !important; 
+    box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.15), 0 4px 12px rgba(15, 23, 42, 0.08) !important; 
+}
+
+/* USD seçiliyken */
+body.theme-light.theme-usd #mainFormBox,
+body.theme-light.theme-usd #creditForm {
+    background: #d9d9d9 !important; 
+    border: 1px solid rgba(16, 185, 129, 0.5) !important;
+    box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.15), 0 4px 12px rgba(15, 23, 42, 0.08) !important;
+}
+
+/* Light Mode typograhpy */
+body.theme-light h1, body.theme-light .display {
+    color: #0f172a !important; background: none !important; -webkit-text-fill-color: #0f172a !important;
+}
+body.theme-light p, body.theme-light .text-neutral-100, body.theme-light .text-neutral-200,
+body.theme-light .text-neutral-300, body.theme-light .text-neutral-400, body.theme-light .text-neutral-500 {
+    color: #334155 !important;
+}
+body.theme-light form label {
+    font-weight: 600 !important; color: #1e293b !important; margin-bottom: 0.5rem !important; display: inline-block !important;
+}
+
+/* Light Mode inputs */
+body.theme-light input, body.theme-light select {
+    background-color: #ffffff80 !important; color: #0f172a !important;
+    border: 1px solid #cbd5e1 !important; border-radius: 0.75rem !important;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.03) !important; transition: all 0.2s ease !important;
+}
+body.theme-light input:focus, body.theme-light select:focus {
+    background-color: #ffffff !important; border-color: #475569 !important; box-shadow: 0 0 0 3px rgba(71, 85, 105, 0.15) !important;
+}
+body.theme-light.theme-usd input:focus, body.theme-light.theme-usd select:focus {
+    border-color: #10b981 !important; box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15) !important;
+}
+body.theme-light input:-webkit-autofill, body.theme-light input:-webkit-autofill:hover,
+body.theme-light input:-webkit-autofill:focus, body.theme-light input:-webkit-autofill:active, body.theme-light select:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important; box-shadow: 0 0 0 1000px #ffffff inset !important;
+    -webkit-text-fill-color: #0f172a !important; transition: background-color 9999s ease-in-out 0s !important;
+}
+
+body.theme-light .currSym, body.theme-light form svg { color: #475569 !important; font-weight: 600 !important; }
+body.theme-light .glass { background: #e2e8f0 !important; border: 1px solid #cbd5e1 !important; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08) !important; }
+body.theme-light #themeSlider + div { background-color: #94a3b8 !important; border-color: #94a3b8 !important; }
+body.theme-light select option { background-color: #ffffff !important; color: #0f172a !important; }
+body.theme-light .avatar-placeholder { border: 1px solid #cbd5e1 !important; background: #ffffff !important; }
+
+@media (min-width: 1024px) { html { font-size: 12px !important; } }
+
+/* Toggle fixleri */
+/* Toggle bg clear */
+body.theme-light [id*="currencyToggle"],
+body.theme-light [id*="Currency"],
+body.theme-light [id*="currency"] {
+    background-color: #f1f5f9 !important; 
+    border: 1px solid #cbd5e1 !important;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.05) !important;
+}
+
+/* İnaktif buton şeffaflığı */
+body.theme-light [id*="currencyToggle"] button:not(.bg-emerald-500):not(.bg-blue-600) {
+    background-color: transparent !important;
+    color: #475569 !important;
+}
+
+/* Live prediction renk fixleri */
+body.theme-light h1.text-white, body.theme-light h2.text-white, body.theme-light h3.text-white,
+body.theme-light h4.text-white, body.theme-light p.text-white, body.theme-light span.text-white,
+body.theme-light .text-2xl, body.theme-light .text-3xl, body.theme-light .text-4xl, body.theme-light .display,
+body.theme-light [id*="live"], body.theme-light [id*="Live"], body.theme-light [id*="Installment"],
+body.theme-light [id*="installment"], body.theme-light [id*="payment"], body.theme-light [id*="Payment"],
+body.theme-light [id*="taksit"], body.theme-light [id*="Taksit"] {
+    color: #0f172a !important; -webkit-text-fill-color: #0f172a !important;
+}
+
+/* Faiz text (Lacivert) */
+body.theme-light .text-blue-400, body.theme-light [id*="faiz"], body.theme-light [id*="Faiz"],
+body.theme-light [id*="rate"], body.theme-light [id*="Rate"] {
+    color: #1e3a8a !important; -webkit-text-fill-color: #1e3a8a !important;
+}
+
+/* Buton text override (beyaza zorla) */
+body.theme-light #analyzeBtn, body.theme-light #analyzeBtn *, body.theme-light button.bg-blue-600,
+body.theme-light button.bg-blue-600 * {
+    color: #ffffff !important; -webkit-text-fill-color: #ffffff !important;
+}
+
+/* Status box (Approve/Reject) */
+
+/* Light mode box */
+body.theme-light .result-approved {
+    border: 1px solid rgba(16, 185, 129, 0.35) !important; 
+    background-color: rgba(16, 185, 129, 0.045) !important; 
+    box-shadow: 0 10px 25px -8px rgba(16, 185, 129, 0.12) !important;
+}
+
+body.theme-light .result-rejected {
+    border: 1px solid rgba(239, 68, 68, 0.35) !important; 
+    background-color: rgba(239, 68, 68, 0.045) !important; 
+    box-shadow: 0 10px 25px -8px rgba(239, 68, 68, 0.12) !important;
+}
+
+/* Dark mode box */
+body:not(.theme-light) .result-approved {
+    border: 1px solid #34d399 !important;
+    background-color: rgba(52, 211, 153, 0.05) !important;
+    box-shadow: 0 0 0 1px rgba(52,211,153,0.15), 0 0 50px -15px rgba(52,211,153,0.4) !important;
+}
+
+body:not(.theme-light) .result-rejected {
+    border: 1px solid #f87171 !important;
+    background-color: rgba(248, 113, 113, 0.05) !important;
+    box-shadow: 0 0 0 1px rgba(248,113,113,0.15), 0 0 50px -15px rgba(248,113,113,0.4) !important;
+}
+
+/* Keyframes & Utils */
+.fade-in { animation: fadeIn .5s ease forwards; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+::selection { background: rgba(139,92,246,0.35); }
+.badge-dot { width: 6px; height: 6px; border-radius: 999px; background: var(--ok); box-shadow: 0 0 8px var(--ok); }
+.avatar-placeholder { background: radial-gradient(circle at 30% 30%, rgba(139,92,246,0.25), rgba(59,130,246,0.1) 60%, transparent 80%); border: 1px solid var(--line); }
