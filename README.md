@@ -109,11 +109,15 @@ Sunucu `http://127.0.0.1:8000` üzerinde ayağa kalkar. `index.html`'i bir taray
 ## 🧰 Kullanılan Teknolojiler
 
 **Backend:** Flask, Waitress (üretim WSGI sunucusu), scikit-learn, SHAP, pandas, SQLite
+
 **Frontend:** Vanilla JavaScript, Tailwind CSS, Particles.js
+
 **Dağıtım:** Windows Server + IIS (reverse proxy) + Let's Encrypt (SSL)
 
 ---
 
 ## 👥 Ekip
 
-QUANTA ekibi tarafından geliştirilmiştir.
+Eren Can Türkoğlu
+Ali Müfit Dede
+Ömür Tutal Pekyiğit
