@@ -6,7 +6,7 @@ Canlı demo: **[credora.finance](https://credora.finance)**
 
 ---
 
-## 🎯 Projenin Amacı ve Analitik Yaklaşım
+## Projenin Amacı ve Analitik Yaklaşım
 
 18.833 kayıttan oluşan **LoanDB** veri seti kullanılarak geliştirilen bu proje, bankacılık sektöründeki temel gerçek dünya problemlerinden birine odaklanmaktadır: **Ciddi sınıf dengesizliği** (Sınıfların dağılımı: %74.6 Red, %25.4 Onay). 
 
@@ -17,7 +17,7 @@ Bu veri seti üzerindeki temel hedeflerimiz şunlardır:
 
 ---
 
-## 🧠 Sistem Mimarisi: Çift Modelli Yapı
+## Sistem Mimarisi: Çift Modelli Yapı
 
 Gerçek dünya bankacılık operasyonlarına tam uyum sağlamak amacıyla sistem iki entegre model üzerinden çalışmaktadır:
 
@@ -44,7 +44,7 @@ Gerçek dünya bankacılık operasyonlarına tam uyum sağlamak amacıyla sistem
 
 ---
 
-## ⚖️ Açıklanabilirlik (XAI) ve Şeffaflık
+## Açıklanabilirlik (XAI) ve Şeffaflık
 
 Yapay zekanın "kara kutu" olmaktan çıkarılması, sistem tasarımımızın temel prensiplerinden biridir. Karar motoru, her red kararı için son kullanıcıya **en yüksek etkiye sahip olan somut sebebi** (gerekirse ikinci bir sebep ile birlikte) sunar:
 
@@ -52,7 +52,7 @@ Yapay zekanın "kara kutu" olmaktan çıkarılması, sistem tasarımımızın te
 *   "Doldurma" veya kullanıcı için anlamsız sebepler yerine, SHAP değerlerinden türetilmiş gerçek içgörüler gösterilir.
 *   Çalışma Durumu veya Eğitim Seviyesi gibi demografik değişkenler tek başlarına bir "red sebebi" olarak müşteriye sunulmaz.
 
-## 🛡️ Veri Etiği ve Model Tasarımı: Yaş Değişkeninin Reddi
+## Veri Etiği ve Model Tasarımı: Yaş Değişkeninin Reddi
 
 Model geliştirme sürecinde yüksek etik standartlar gözetilmiş ve **`Yaş` değişkeni her iki modelden de tamamen çıkarılmıştır.** Yapılan çoklu bağlantı (multicollinearity) analizlerinde, yaş değişkeninin taşıdığı istatistiksel bilginin, `Deneyim_Yıl` (Mesleki Deneyim) değişkeniyle neredeyse birebir örtüştüğü tespit edilmiştir. Yaşın veri setinden çıkarılması:
 *   Faiz tahmin modelinin MAE/R² metriklerini **hiç değiştirmemiştir.**
@@ -62,7 +62,7 @@ Yaş değişkenini modelde tutmanın hiçbir istatistiksel veya iş gerekçesi b
 
 ---
 
-## 🔄 MLOps ve Sürekli Öğrenme Altyapısı
+## MLOps ve Sürekli Öğrenme Altyapısı
 
 Modelin canlıya alınmasıyla süreç sonlanmamaktadır. Kullanıcı arayüzünde bulunan "MLOps Aktif" onayı (varsayılan olarak açık) sayesinde, başvuru sırasında modele giden veriler ve tahmin sonuçları ileride gerçekleştirilecek model iyileştirmeleri için **SQLite** veritabanına kaydedilir. Toplanan veriler tamamen anonimleştirilmiş olup kişisel veri içermez; temel amaç zaman içinde oluşabilecek performans sapmalarını (model drift) izlemek ve sürekli öğrenme döngüsünü beslemektir.
 
@@ -92,7 +92,7 @@ Credora/
 
 ---
 
-## 🚀 Kurulum ve Çalıştırma
+## Kurulum ve Çalıştırma
 
 Projeyi yerel ortamınızda test etmek için aşağıdaki adımları izleyebilirsiniz:
 
@@ -116,7 +116,7 @@ Backend sunucusu `http://127.0.0.1:8000` adresinde çalışmaya başlayacaktır.
 
 ---
 
-## 🧰 Kullanılan Teknolojiler
+## Kullanılan Teknolojiler
 
 *   **Makine Öğrenmesi & Veri Bilimi:** scikit-learn, SHAP, pandas
 *   **Backend & API:** Flask, Waitress (Production WSGI server), SQLite
