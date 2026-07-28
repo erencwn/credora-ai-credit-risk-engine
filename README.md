@@ -129,4 +129,4 @@ Backend sunucusu `http://127.0.0.1:8000` adresinde çalışmaya başlayacaktır.
 
 *   Eren Can Türkoğlu
 *   Ali Müfit Dede
-*   Ömür Tutal Pekyiğit
+*   Ömür Tutal Pekyiğit 
