@@ -2,7 +2,7 @@
 
 Credora, kredi başvuru süreçlerini otomatize eden, başvuruların **onay/red durumunu** ve onaylanan başvurular için **optimum yıllık faiz oranını** tahmin eden, uçtan uca (end-to-end) tasarlanmış bir makine öğrenmesi uygulamasıdır. Modelin sadece bir çalışma ortamında (notebook) kalmayıp gerçek dünya kullanımına uygun, API destekli bir yapıya dönüştürüldüğü bu sistem, "Açıklanabilir Yapay Zeka" (XAI) prensiplerini merkeze almaktadır.
 
-Canlı demo: **[credora.finance](https://credora.finance)**
+Canlı Demo: **[credora.finance](https://credora.finance)**
 
 ---
 
